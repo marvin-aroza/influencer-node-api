@@ -1,0 +1,18 @@
+before_script:
+  - echo "Before script"
+  - rm -rfv .env
+  - echo "DB_CONNECT=$DB_CONNECT" >> .env
+  - echo "CONNECT_PORT=$CONNECT_PORT" >> .env
+  - echo "TOKEN_SECRET=$TOKEN_SECRET" >> .env
+stages:
+  - deploy
+
+deploy:
+    image: ruby:latest
+    stage: deploy
+    before_script:
+        - gem install dpl
+    script:
+        - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_APP_KEY
+    only:
+        - master
