@@ -11,21 +11,27 @@ const cors = require('cors');
 app.use(cors());
 app.use(bodyParser.json());
 app.use(cors());
+
+
+//Routes imports
+const registerRoute = require('./Routes/Auth/registration');
+const loginRoute = require('./Routes/Auth/login');
+const adminRoute = require('./Routes/Admin/admin');
+const userRoute = require('./Routes/User/user');
+
+//Route middleware
+app.use('/auth',registerRoute)
+app.use('/login',loginRoute)
+app.use('/admin',adminRoute)
+app.use('/user',userRoute)
+
 //Db connection
 mongoconnect.connect(process.env.DB_CONNECT,{
     useNewUrlParser:true,useUnifiedTopology:true},()=>{
         console.log('Mongodb Connected');
 })
 
-//Routes imports
-const registerRoute = require('./Routes/Auth/registration');
-const loginRoute = require('./Routes/Auth/login');
-
-//Route middleware
-app.use('/auth',registerRoute)
-app.use('/login',loginRoute)
-
 //Server poor
-app.listen(process.env.PORT,()=>{
-    console.log('Port running at 3000');
+app.listen(process.env.CONNECT_PORT,()=>{
+    console.log(process.env.CONNECT_PORT);
 })
