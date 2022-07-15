@@ -12,6 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(cors());
 
+port = process.env.PORT || 80
 
 //Routes imports
 const registerRoute = require('./Routes/Auth/registration');
@@ -32,6 +33,6 @@ mongoconnect.connect(process.env.DB_CONNECT,{
 })
 
 //Server poor
-app.listen(process.env.CONNECT_PORT,()=>{
-    console.log(process.env.CONNECT_PORT);
+app.listen(port,()=>{
+    console.log(port);
 })
