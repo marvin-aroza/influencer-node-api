@@ -19,12 +19,14 @@ const registerRoute = require('./Routes/Auth/registration');
 const loginRoute = require('./Routes/Auth/login');
 const adminRoute = require('./Routes/Admin/admin');
 const userRoute = require('./Routes/User/user');
+const influencerRoute = require('./Routes/Influencer/influencer');
 
 //Route middleware
 app.use('/auth',registerRoute)
 app.use('/login',loginRoute)
 app.use('/admin',adminRoute)
 app.use('/user',userRoute)
+app.use('/influencer',influencerRoute)
 
 //Db connection
 mongoconnect.connect(process.env.DB_CONNECT,{
