@@ -20,6 +20,8 @@ const loginRoute = require('./Routes/Auth/login');
 const adminRoute = require('./Routes/Admin/admin');
 const userRoute = require('./Routes/User/user');
 const influencerRoute = require('./Routes/Influencer/influencer');
+const commonRoute = require('./Routes/Common/common');
+const collabRoute = require('./Routes/Collab/collab');
 
 //Route middleware
 app.use('/auth',registerRoute)
@@ -27,6 +29,8 @@ app.use('/login',loginRoute)
 app.use('/admin',adminRoute)
 app.use('/user',userRoute)
 app.use('/influencer',influencerRoute)
+app.use('/common',commonRoute)
+app.use('/collab',collabRoute)
 
 //Db connection
 mongoconnect.connect(process.env.DB_CONNECT,{
