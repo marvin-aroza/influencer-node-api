@@ -9,9 +9,9 @@ const sendEmail = require('../../Middleware/mailer');
 
 router.post('/register',async (req,res)=>{
     //console.log('inside register');
-    var userexists = await User.findOne({email:req.body.email});
+    var userexists = await User.findOne({email:req.body.email, role:req.body.role});
     if(userexists){
-        res.status(400).json({
+        return res.status(400).json({
             code:400,
             message:'Email is already taken!',
             data:null,
