@@ -7,7 +7,7 @@ const validateToken = require('../../Middleware/auth-middleware').validateToken;
 const adminRole = require("../../Middleware/admin-role").adminRole;
 
 //get User list
-router.get("/", validateToken, async (req, res) => {
+router.get("/", validateToken, adminRole, async (req, res) => {
     try {
       const user = await User.find({role:"User"});
       res.status(200).json({
@@ -27,7 +27,7 @@ router.get("/", validateToken, async (req, res) => {
   });
 
 //get indiviual user details
-router.get("/:userId", validateToken, adminRole, async (req, res) => {
+router.get("/:userId", validateToken, async (req, res) => {
     try {
       const user = await User.findById(req.params.userId);
       res.status(200).json({
