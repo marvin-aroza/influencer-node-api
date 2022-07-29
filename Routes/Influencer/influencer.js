@@ -10,7 +10,7 @@ const adminRole = require("../../Middleware/admin-role").adminRole;
 
 
 //get Influencer list
-router.get("/", validateToken, adminRole, async (req, res) => {
+router.get("/", validateToken, async (req, res) => {
   try {
     const user = await User.find({ role: "Influencer" });
     res.status(200).json({
