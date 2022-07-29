@@ -7,8 +7,19 @@ const mongoconnect = require('mongoose');
 require('dotenv/config');
 const cors = require('cors');
 
+var allowlist = ['https://h2h-angular-admin.herokuapp.com', 'https://h2h-angular.herokuapp.com', 'http://localhost:4201', 'http://localhost:4200']
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (allowlist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false } // disable CORS for this request
+  }
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
+
 //Package middleware
-app.use(cors());
+app.use(cors(corsOptionsDelegate));
 app.use(bodyParser.json());
 app.use(cors());
 
