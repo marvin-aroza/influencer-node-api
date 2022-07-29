@@ -217,4 +217,60 @@ router.get(
     }
   }
 );
+
+router.get(
+  "/get-collab-by-id-user/:userId/:status",
+  validateToken,
+  async (req, res) => {
+    try {
+      let match = { userId: req.params.userId };
+      if(req.params.status !== 'All') {
+        match = { userId: req.params.userId ,status: req.params.status }
+
+      }
+      const collab = await Collab.aggregate([
+        {$match: match},
+        {
+          $addFields: {
+            newUserId: { $toObjectId: "$userId" },
+            newinfluencerId: { $toObjectId: "$influencerId" },
+          },
+        },
+        {
+          $lookup: {
+            from: User.collection.name,
+            localField: "newUserId",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+        {
+          $lookup: {
+            from: User.collection.name,
+            localField: "newinfluencerId",
+            foreignField: "_id",
+            as: "influencer",
+          },
+        },
+        { $sort: { _id: -1 } },
+      ]);
+
+      let message = "Collab request list fetched successfully..!";
+
+      res.status(200).json({
+        code: 200,
+        message: message,
+        data: collab,
+        status: true,
+      });
+    } catch (error) {
+      res.status(500).json({
+        code: 500,
+        message: error,
+        data: null,
+        status: false,
+      });
+    }
+  }
+);
 module.exports = router;
