@@ -32,7 +32,22 @@ router.get("/", validateToken, async (req, res) => {
 //get indiviual Influencer details
 router.get("/:userId", validateToken, async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
+    // const user = await User.findById(req.params.userId);
+
+    const user = await User.aggregate([
+      {
+        $match : { userId: req.params.userId }
+      },
+      {
+        $lookup: {
+          from: User.collection.name,
+          localField: "_id",
+          foreignField: "userId",
+          as: "additional_info",
+        },
+      },
+    ]);
+
     res.status(200).json({
       code: 200,
       message: "Influencer fetched successfully",
