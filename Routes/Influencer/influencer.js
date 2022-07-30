@@ -6,6 +6,7 @@ const User = require("../../Model/user");
 const InfluencerProfile = require("../../Model/influencerProfile");
 const validateToken = require("../../Middleware/auth-middleware").validateToken;
 const adminRole = require("../../Middleware/admin-role").adminRole;
+const mongoose = require('mongoose');
 
 
 
@@ -36,12 +37,17 @@ router.get("/:userId", validateToken, async (req, res) => {
 
     const user = await User.aggregate([
       {
-        $match : { userId: req.params.userId }
+        $match : { "_id": mongoose.Types.ObjectId(req.params.userId) }
+      },
+      {
+        $addFields: {
+          newUserId: { $toString: "$_id" },
+        },
       },
       {
         $lookup: {
-          from: User.collection.name,
-          localField: "_id",
+          from: InfluencerProfile.collection.name,
+          localField: "newUserId",
           foreignField: "userId",
           as: "additional_info",
         },
