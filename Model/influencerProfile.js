@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const influencerProfilechema=mongoose.Schema({
+    description: {
+        type: String,
+        require: true
+    },
     userId: {
         type: String,
         require: true
