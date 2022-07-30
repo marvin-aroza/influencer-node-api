@@ -30,7 +30,7 @@ router.get("/", validateToken, async (req, res) => {
 });
 
 //get indiviual Influencer details
-router.get("/:userId", validateToken, adminRole, async (req, res) => {
+router.get("/:userId", validateToken, async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
     res.status(200).json({
