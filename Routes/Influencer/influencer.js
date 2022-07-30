@@ -70,7 +70,7 @@ router.delete("/:userId", validateToken, adminRole, async (req, res) => {
 });
 
 //update Influencer info
-router.patch("/:userId", validateToken, adminRole, async (req, res) => {
+router.patch("/:userId", validateToken, async (req, res) => {
   try {
     const user = await User.updateOne(
       { _id: req.params.userId },
@@ -154,7 +154,8 @@ router.post(
             budget: req.body.budget,
             location: req.body.location,
             officeAddress: req.body.officeAddress,
-            ratings: req.body.ratings
+            ratings: req.body.ratings,
+            description: req.body.description
           },
         },
         {
