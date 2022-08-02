@@ -67,7 +67,7 @@ router.delete("/:userId", validateToken, adminRole, async (req, res) => {
   });
 
   //update user info
-router.patch("/:userId", validateToken, adminRole,  async (req, res) => {
+router.patch("/:userId", validateToken,  async (req, res) => {
     try {
       const user = await User.updateOne(
         { _id: req.params.userId },
