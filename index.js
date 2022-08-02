@@ -7,7 +7,7 @@ const mongoconnect = require('mongoose');
 require('dotenv/config');
 const cors = require('cors');
 
-var allowlist = ['https://h2h-angular-admin.herokuapp.com', 'https://h2h-angular.herokuapp.com', 'http://localhost:4201', 'http://localhost:4200']
+var allowlist = ['https://inlfuencer-user.herokuapp.com', 'https://influencer-angular.herokuapp.com', 'http://localhost:4201', 'http://localhost:4200']
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
